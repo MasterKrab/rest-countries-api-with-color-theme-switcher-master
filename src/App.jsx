@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled, {ThemeProvider, createGlobalStyle} from "styled-components";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import colors from "./theming/colors";
 import Normalize from "react-normalize"
 import WebFont from 'webfontloader';
@@ -79,7 +79,10 @@ const App = () => {
                     <Switch>
                         <Route exact path="/details/:code" component={Details} />
                         <Route exact path="/" component={Home} />
-                        <Route path="/*" component={Error404} />
+                        <Route exact path="/not-found" component={Error404} />
+                        <Route path="/*" >
+                            <Redirect to="/not-found"/>
+                        </Route>
                     </Switch>
                 </Main>
             </Router>

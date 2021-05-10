@@ -163,13 +163,15 @@ const Home = () => {
     const [urlParams, setUrlParams] = useState("");
     const [countries, isLoading] = useHttp(`https://restcountries.eu/rest/v2/${urlParams}`);
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    const printCountries = () => {
         country.length > 0
             ? setUrlParams(`name/${country}`)
             : setUrlParams("");
+    };
 
-        console.log(countries)
+    const handleSubmit = e => {
+        e.preventDefault();
+        printCountries();
     };
 
     const handleRegion = e => {
@@ -185,7 +187,8 @@ const Home = () => {
 
     const handleSearch = e => {
         setCountry(e.target.value);
-    }
+        printCountries();
+    };
 
     return (
         <>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {useHttp} from "../hooks/useHttp";
@@ -116,7 +116,7 @@ const Details = ({match}) => {
     const [country, isLoading] = useHttp(`https://restcountries.eu/rest/v2/alpha/${match.params.code}`);
     const [countries, isCountriesLoading] = useHttp(`https://restcountries.eu/rest/v2/all`);
 
-    let {
+    const {
         name,
         flag,
         nativeName,
@@ -137,6 +137,7 @@ const Details = ({match}) => {
                 Back
             </BackLink>
             {
+
                 !isLoading ? (
                     <Article>
                         <img src={flag} alt={`flag of ${name}`}  />
