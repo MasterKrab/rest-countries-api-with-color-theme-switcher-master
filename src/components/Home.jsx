@@ -21,7 +21,7 @@ const Form = styled.form`
   flex-direction: column;
   gap: 2.5rem;
 
-  @media screen and (min-width: 768px){ 
+  @media screen and (min-width: 1024px){ 
     flex-direction: row;
     justify-content: space-between;
     margin-top: 40px;
