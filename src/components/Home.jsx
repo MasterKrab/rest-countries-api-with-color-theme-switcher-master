@@ -3,7 +3,8 @@ import styled, {css} from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import id from "nanoid";
-import {ReactComponent as Spinner} from "../assets/images/spinner.svg"
+
+import Cards from "./Cards";
 
 import {useHttp} from "../hooks/useHttp";
 import CardCountry from "./CardCountry";
@@ -127,37 +128,8 @@ const Select = styled.select`
   }
 `;
 
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  justify-content: center;
-  align-items: start;
-  gap: 70px;
-  margin-top: 2rem;
-
-  @media screen and (min-width: 1024px){
-    grid-template-columns: repeat(auto-fit, minmax(250px, 265px));
-    column-gap: 80px;
-    margin-top: 3rem;
-  }
-
-  @media screen and (min-width: 1300px) {
-    column-gap: 0;
-    justify-content: space-between;
-  }
-`;
-
-const CenterSpinner = styled(Spinner)`
-  grid-column: span 2;
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  grid-column: span 2;
-`
-
 const Home = () => {
-    const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"]
+    const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania", "Polar"]
 
     const [country, setCountry] = useState("");
     const [region, setRegion] = useState("");
@@ -177,13 +149,6 @@ const Home = () => {
 
     const handleRegion = e => {
         setRegion(e.target.value);
-
-        if (e.target.value === "") {
-            setUrlParams("");
-        } else {
-            setUrlParams(`region/${e.target.value}`);
-            setCountry("");
-        }
     };
 
     const handleSearch = e => {
@@ -191,55 +156,46 @@ const Home = () => {
         printCountries();
     };
 
-    return (
-        <>
-            <Form onSubmit={handleSubmit}>
-                <SearchContainer>
-                    <InputSearch
-                        onChange={handleSearch}
-                        type="search"
-                        name="search"
-                        aria-label={"Search for a country"}
-                        placeholder="Search for a country..."
-                        value={country}
-                    />
-                    <Button aria-label={"Search"}>
-                        <FontAwesomeIcon aria-hidden={true} icon={faSearch} />
-                    </Button>
-                </SearchContainer>
-                <SelectContainer>
-                    <Select value={region} onChange={handleRegion} name="regions" aria-label={"Filter by region"}>
-                        <option value="">Filter by region</option>
-                        {
-                            regions.map(region => (
-                                <option key={id()} value={region}>{region}</option>
-                            ))
-                        }
-                    </Select>
-                </SelectContainer>
-            </Form>
-            <Cards aria-live="polite">
-                {
-                    !isLoading ?
-                        countries.length > 0 ? countries.map(country => (
-                            <CardCountry
-                                countryName={country.name}
-                                flag={country.flag}
-                                population={country.population}
-                                region={country.region}
-                                capital={country.capital}
-                                alpha3Code={country.alpha3Code}
-                                key={id()}
-                            />
-                        )): (
-                            <Title>We did not find any country according to the search</Title>
-                        ) : (
-                            <CenterSpinner />
-                        )
-                }
-            </Cards>
-        </>
-    )
+    return <>
+        <Form onSubmit={handleSubmit}>
+            <SearchContainer>
+                <InputSearch
+                    onChange={handleSearch}
+                    type="search"
+                    name="search"
+                    aria-label={"Search for a country"}
+                    placeholder="Search for a country..."
+                    value={country}
+                />
+                <Button aria-label={"Search"}>
+                    <FontAwesomeIcon aria-hidden={true} icon={faSearch} />
+                </Button>
+            </SearchContainer>
+            <SelectContainer>
+                <Select value={region} onChange={handleRegion} name="regions" aria-label={"Filter by region"}>
+                    <option value="">Filter by region</option>
+                    {
+                        regions.map(region => <option key={id()} value={region}>{region}</option>)
+                    }
+                </Select>
+            </SelectContainer>
+        </Form>
+        <Cards isLoading={isLoading}>
+            {
+                countries.length > 0 &&
+                countries.map(country => country.region === region || region === "" ? (
+                    <CardCountry
+                        countryName={country.name}
+                        flag={country.flag}
+                        population={country.population}
+                        region={country.region}
+                        capital={country.capital}
+                        alpha3Code={country.alpha3Code}
+                        key={id()}
+                    />) : null)
+            }
+        </Cards>
+    </>
 };
 
 export default Home;
