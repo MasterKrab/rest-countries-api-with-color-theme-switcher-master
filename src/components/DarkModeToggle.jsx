@@ -4,17 +4,28 @@ import styled from "styled-components";
 const Input = styled.input`
   appearance: none;
   cursor: pointer;
+  transition: transform 0.5s;
   
   &::after{
     content: "\\f186";
     font-family: 'Font Awesome 5 Free';
     color: #000;
     transition: color 0.5s;
+ }
+ 
+  @media screen and (min-width: 768px){
+    &:hover{
+        transform: rotate(1turn);
+    } 
   }
   
-  &:checked::after{
-    color: #fff;
-    font-weight: 800;
+  &:checked{
+    transform: rotate(1turn);
+    
+   &::after{
+     color: #fff;
+     font-weight: 800;
+   }
   }
 `;
 

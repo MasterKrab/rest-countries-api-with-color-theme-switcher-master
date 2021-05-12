@@ -45,7 +45,7 @@ const InputSearch = styled.input`
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1024px) {
     width: 480px;
   }
   
@@ -129,7 +129,7 @@ const Select = styled.select`
 
 const Cards = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   justify-content: center;
   align-items: start;
   gap: 70px;
@@ -137,11 +137,12 @@ const Cards = styled.div`
 
   @media screen and (min-width: 1024px){
     grid-template-columns: repeat(auto-fit, minmax(250px, 265px));
-    justify-content: space-between;
+    column-gap: 80px;
     margin-top: 3rem;
   }
 
-  @media screen and (min-width: 1220px) {
+  @media screen and (min-width: 1300px) {
+    column-gap: 0;
     justify-content: space-between;
   }
 `;
@@ -164,7 +165,7 @@ const Home = () => {
     const [countries, isLoading] = useHttp(`https://restcountries.eu/rest/v2/${urlParams}`);
 
     const printCountries = () => {
-        country.length > 0
+        country.trim().length > 0
             ? setUrlParams(`name/${country}`)
             : setUrlParams("");
     };
@@ -177,7 +178,7 @@ const Home = () => {
     const handleRegion = e => {
         setRegion(e.target.value);
 
-        if (region.length === 0) {
+        if (e.target.value === "") {
             setUrlParams("");
         } else {
             setUrlParams(`region/${e.target.value}`);

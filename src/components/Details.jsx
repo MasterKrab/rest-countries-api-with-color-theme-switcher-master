@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {useHttp} from "../hooks/useHttp";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import id from "nanoid";
-import {ReactComponent as Spinner} from "../assets/images/spinner.svg";
+import { ReactComponent as Spinner } from "../assets/images/spinner.svg";
 
 import List from "./List";
 import Bold from "./Bold";
@@ -112,9 +112,11 @@ const BorderLink = styled(Link)`
   border-radius: 5px;
 `;
 
-const Details = ({match}) => {
+const Details = ({match, history}) => {
     const [country, isLoading] = useHttp(`https://restcountries.eu/rest/v2/alpha/${match.params.code}`);
     const [countries, isCountriesLoading] = useHttp(`https://restcountries.eu/rest/v2/all`);
+
+    country.status === 400 && history.push("/not-found")
 
     const {
         name,
