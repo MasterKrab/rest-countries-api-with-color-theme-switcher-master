@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Input = styled.input`
   appearance: none;
   cursor: pointer;
-  transition: transform 0.5s;
   
   &::after{
     content: "\\f186";
@@ -12,20 +11,10 @@ const Input = styled.input`
     color: #000;
     transition: color 0.5s;
  }
- 
-  @media screen and (min-width: 768px){
-    &:hover{
-        transform: rotate(1turn);
-    } 
-  }
   
-  &:checked{
-    transform: rotate(1turn);
-    
-   &::after{
+  &:checked::after{
      color: #fff;
      font-weight: 800;
-   }
   }
 `;
 
