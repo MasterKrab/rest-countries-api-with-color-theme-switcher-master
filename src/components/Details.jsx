@@ -161,7 +161,7 @@ const Details = ({match, history}) => {
                                 </List>
                             </ContainerList>
                             {
-                                borders.length > 0 && (
+                                borders?.length && (
                                     <BorderContainer>
                                         <h3>Border countries: </h3>
                                         <BorderList>
