@@ -152,11 +152,11 @@ const Details = ({match, history}) => {
                                     <li><Bold>Population: </Bold>{population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</li>
                                     <li><Bold>Region: </Bold>{region}</li>
                                     <li><Bold>Sub Region: </Bold>{subregion}</li>
-                                    <li><Bold>Capital: </Bold>{capital}</li>
+                                    {capital && <li><Bold>Capital: </Bold>{capital}</li>}
                                 </List>
                                 <List>
                                     <li><Bold>Top Level Domain: </Bold>{topLevelDomain}</li>
-                                    <li><Bold>Currencies: </Bold>{currencies.map(currency => currency.name).join(", ")}</li>
+                                    {currencies && <li><Bold>Currencies: </Bold>{currencies.map(currency => currency.name).join(", ")}</li>}
                                     <li><Bold>Languages: </Bold>{languages.map(language => language.name).join(", ")}</li>
                                 </List>
                             </ContainerList>
