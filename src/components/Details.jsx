@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {useHttp} from "../hooks/useHttp";
+import { useHttp } from "../hooks/useHttp";
+import apiUrl from '../utils/apiUrl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import id from "nanoid";
@@ -113,8 +114,8 @@ const BorderLink = styled(Link)`
 `;
 
 const Details = ({match, history}) => {
-    const [country, isLoading] = useHttp(`https://restcountries.eu/rest/v2/alpha/${match.params.code}`);
-    const [countries, isCountriesLoading] = useHttp(`https://restcountries.eu/rest/v2/all`);
+    const [country, isLoading] = useHttp(`${apiUrl}/alpha/${match.params.code}`);
+    const [countries, isCountriesLoading] = useHttp(`${apiUrl}/all`);
 
     country.status === 400 && history.push("/not-found")
 

@@ -6,7 +6,8 @@ import id from "nanoid";
 
 import Cards from "./Cards";
 
-import {useHttp} from "../hooks/useHttp";
+import { useHttp } from "../hooks/useHttp";
+import apiUrl from '../utils/apiUrl'
 import CardCountry from "./CardCountry";
 
 const outline = () => {
@@ -134,7 +135,7 @@ const Home = () => {
     const [country, setCountry] = useState("");
     const [region, setRegion] = useState("");
     const [urlParams, setUrlParams] = useState("");
-    const [countries, isLoading] = useHttp(`https://restcountries.eu/rest/v2/${urlParams}`);
+    const [countries, isLoading] = useHttp(`${apiUrl}/${urlParams || 'all'}`);
 
     const printCountries = () => {
         country.trim().length > 0
